@@ -1,0 +1,13 @@
+*
+!*/
+!.gitignore
+
+!LICENSE
+!README.md
+
+resources/
+
+!al_ip/**
+!constraints/**
+!src/**
+!USB_Wave_Generater.al

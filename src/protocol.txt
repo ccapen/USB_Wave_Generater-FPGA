@@ -1,0 +1,36 @@
+//SPI PROTOCOL
+//MSB_FIRST, BIG_ENDIAN
+
+0xa0 0xa5 PACKET_ID(8bit) NUM(16bit):0-4095 NUM_bytes CRC16-CCITTofNUM_bytes(16bit)
+
+
+NUM_bytes:
+CMD(8bit) xbytes_value
+
+
+//TO FPGA
+CMD00:
+{
+	R_output_mode(8bit)
+	R_update_rate_div(8bit)
+	R_sample_points(24bit):23'b1-23'h400000
+	R_output_offset(16bit):(10'd-512)-10'd511
+	//R_is_desinc_on(8bit)
+}
+CMD01: R_start_addr(24bit):22'b0-{22{1'b1}} (NUM - 4)bytesOFwavedata
+CMD02: R_is_run(8bit) //R_run_cycles(16bit)
+
+
+//analysis by MCU and will not be relayed to FPGA
+CMDf0: is_program_mode(8bit)
+CMDf1: FLASH_CMD(8bit) address(24bit) [(NUM - 5)bytesOFflashdata or read_length(16bit)]
+
+FLASH_CMD:
+03h: read
+02h: program
+20h: sector_erase(4kbytes)
+52h: block_erase(32kbytes)
+d8h: block_erase(64kbytes)
+
+
+//end SPI PROTOCOL
