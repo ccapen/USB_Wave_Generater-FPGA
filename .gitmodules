@@ -1,0 +1,9 @@
+[submodule "src/Verilog-LIB"]
+	path = src/Verilog-LIB
+	url = https://github.com/ccapen/Verilog-LIB.git
+[submodule "src/Verilog-adapt"]
+	path = src/Verilog-adapt
+	url = https://github.com/ccapen/Verilog-adapt.git
+[submodule "src/sdram_controller"]
+	path = src/sdram_controller
+	url = https://github.com/ccapen/sdram_controller.git
