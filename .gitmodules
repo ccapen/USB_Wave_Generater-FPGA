@@ -7,3 +7,6 @@
 [submodule "src/sdram_controller"]
 	path = src/sdram_controller
 	url = https://github.com/ccapen/sdram_controller.git
+[submodule "src/Verilog-SPI"]
+	path = src/Verilog-SPI
+	url = https://github.com/ccapen/Verilog-SPI.git
