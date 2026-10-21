@@ -7,6 +7,7 @@ module top_test_sdram_controller (
 	output			O_miso,
 	output			O_int,
 
+	output			O_led_run,
 	output			O_dclk,
 	output	[9:0]	O_data
 );
@@ -57,6 +58,8 @@ time_delay_ms #(
 );
 
 
+wire W_miso;
+
 wire	[7:0]	W_spi_wdata;
 wire			W_spi_wready;
 wire			W_spi_rvalid;
@@ -84,13 +87,15 @@ spi_slave #(
 	.I_csn				(I_nss),
 	.I_sclk				(I_sck),
 	.I_mosi				(I_mosi),
-	.O_miso				(O_miso)
+	.O_miso				(W_miso)
 );
+
+assign O_miso = I_nss ? 1'bz : W_miso;
 
 
 wire			W_is_run;
 wire	[7:0]	W_update_rate_div;
-wire	[21:0]	W_sample_points;
+wire	[22:0]	W_sample_points;
 wire			W_wave_valid;
 wire	[20:0]	W_wave_addr;
 wire	[31:0]	W_wave_data;
@@ -122,6 +127,30 @@ protocol_analysis #(
 assign O_int = 1'bz;
 
 
+wire W_clk_en;
+
+en_clk_divider #(
+	.CLK_FREQ		(125_000_000),
+	.EN_FREQ		(2),
+	// .CLK_DIVIDE		(CLK_FREQ / EN_FREQ),
+	.EN_POSITION	("END")		//"START" "END"
+) en_clk_divider_u(
+	.I_clk			(W_mclk),
+	.I_rstn			(R_mclk_rstn),
+
+	.O_clk_en		(W_clk_en)
+);
+
+reg R_led;
+
+always @(posedge W_mclk) begin
+	R_led <= W_clk_en ? (!R_led) : R_led;
+end
+
+assign O_led_run = R_led;
+
+
+
 wire			W_wvalid;
 wire	[20:0]	W_waddr;
 wire	[31:0]	W_wdata;
@@ -143,7 +172,7 @@ reg R_rwmix_wr;
 reg R_rwmix_rd;
 reg R_wvalid;
 reg R_rvalid;
-reg [20:0] R_test_waddr;
+reg [21:0] R_test_waddr;
 reg [20:0] R_test_raddr;
 
 // reg [21:0] R_test_addr;
@@ -174,7 +203,7 @@ always @(posedge W_mclk or negedge R_mclk_rstn) begin
 	// 	R_rvalid <= ;
 	
 	if(!R_mclk_rstn)
-		R_test_waddr <= 21'b0;// + 21'd1024;
+		R_test_waddr <= 22'b0;// + 21'd1024;
 	else if(W_wready)
 		R_test_waddr <= R_test_waddr + 1'b1;
 	else 
@@ -197,30 +226,52 @@ end
 // assign W_rvalid	= (R_test_waddr == {21{1'b1}});
 // assign W_raddr	= R_test_raddr;
 // assign W_rdqm	= 4'b0;
-// //end cr
+// //end continuous read
 
-// //bank interleave read
-// assign W_wvalid	= (R_test_waddr != {21{1'b1}});
+//bank interleave read
+assign W_wvalid	= (!R_test_waddr[21]);
+assign W_waddr	= R_test_waddr[20:0];
+assign W_wdata	= {11'b0 ,R_test_waddr[20:0]};
+assign W_wdqm	= 4'b0;
+
+assign W_rvalid	= R_test_waddr[21];
+assign W_raddr	= {R_test_raddr[2], R_test_raddr[20:3], R_test_raddr[1:0]};
+assign W_rdqm	= 4'b0;
+//end bank interleave read
+
+// //read write mix
+// assign W_wvalid	= R_rwmix_wr;
 // assign W_waddr	= R_test_waddr;
 // assign W_wdata	= {11'b0 ,R_test_waddr};
 // assign W_wdqm	= 4'b0;
 
-// assign W_rvalid	= (R_test_waddr == {21{1'b1}});
-// assign W_raddr	= {R_test_raddr[1], R_test_raddr[20:2], R_test_raddr[0]};
+// assign W_rvalid	= R_rwmix_rd;
+// assign W_raddr	= R_test_raddr;
+// // assign W_raddr	= {R_test_raddr[1], R_test_raddr[20:2], R_test_raddr[0]};
 // assign W_rdqm	= 4'b0;
-// //end bir
+// //end read write mix
 
-//read write mix
-assign W_wvalid	= R_rwmix_wr;
-assign W_waddr	= R_test_waddr;
-assign W_wdata	= {11'b0 ,R_test_waddr};
-assign W_wdqm	= 4'b0;
 
-assign W_rvalid	= R_rwmix_rd;
-assign W_raddr	= R_test_raddr;
-// assign W_raddr	= {R_test_raddr[1], R_test_raddr[20:2], R_test_raddr[0]};
-assign W_rdqm	= 4'b0;
-//end rwm
+
+reg R_is_error;
+reg R_have_error;
+
+always @(posedge W_mclk or negedge R_mclk_rstn) begin
+	if(!R_mclk_rstn)
+		R_is_error <= 1'b0;
+	else 
+		R_is_error <= W_out_valid && (W_out_addr != W_out_data);
+
+	if(!R_mclk_rstn)
+		R_have_error <= 1'b0;
+	else if(R_have_error)
+		R_have_error <= 1'b1;
+	else 
+		R_have_error <= R_is_error;
+end
+
+
+
 
 
 wire W_powerup_rstn;
@@ -284,8 +335,14 @@ sdram_controller #(
 	.POWERUP_DELAYMS		(1000),
 	.BURSTLENGTH			(4),
 	.BURSTTYPE				("SEQUENTIAL"),		//"SEQUENTIAL" "INTERLEAVE"
+
 	.INWBUFFERDEPTH			(0),		//must be 2**n or 0
+	.WDATABATCHLENGTH		(0),		//must < INWBUFFERDEPTH, or be 0
+	.WMAXBATCHDELAY			(0),		//if it == 0, means infinity
 	.INRBUFFERDEPTH			(0),		//must be 2**n or 0
+	.RDATABATCHLENGTH		(0),		//must < INRBUFFERDEPTH, or be 0
+	.RMAXBATCHDELAY			(0),		//if it == 0, means infinity
+
 	.WPREACTIVEDEPTH		(8),		//must be 2**n and should >= 8
 	.RPREACTIVEDEPTH		(8),		//must be 2**n and should >= 8
 	.RWBUFFERDEPTH			(4),		//must be 2**n and >= 4
