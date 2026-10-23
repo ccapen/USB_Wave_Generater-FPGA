@@ -157,7 +157,7 @@
                     <Attr Name="CompileOrder" Val="20"/>
                 </FileInfo>
             </File>
-            <File Path="src/sdram_controller/intelli_refresh.v">
+            <File Path="src/sdram_controller/sdram_bank_manage.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
@@ -165,7 +165,7 @@
                     <Attr Name="CompileOrder" Val="21"/>
                 </FileInfo>
             </File>
-            <File Path="src/sdram_controller/sdram_bank_manage.v">
+            <File Path="src/sdram_controller/sdram_bank_state.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
@@ -173,7 +173,7 @@
                     <Attr Name="CompileOrder" Val="22"/>
                 </FileInfo>
             </File>
-            <File Path="src/sdram_controller/sdram_bank_state.v">
+            <File Path="src/sdram_controller/sdram_controller.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
@@ -181,7 +181,7 @@
                     <Attr Name="CompileOrder" Val="23"/>
                 </FileInfo>
             </File>
-            <File Path="src/sdram_controller/sdram_controller.v">
+            <File Path="src/sdram_controller/sdram_init.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
@@ -189,7 +189,7 @@
                     <Attr Name="CompileOrder" Val="24"/>
                 </FileInfo>
             </File>
-            <File Path="src/sdram_controller/sdram_init.v">
+            <File Path="src/sdram_controller/sdram_operate.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
@@ -197,20 +197,12 @@
                     <Attr Name="CompileOrder" Val="25"/>
                 </FileInfo>
             </File>
-            <File Path="src/sdram_controller/sdram_operate.v">
-                <FileInfo>
-                    <Attr Name="UsedInSyn" Val="true"/>
-                    <Attr Name="UsedInP&R" Val="true"/>
-                    <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="26"/>
-                </FileInfo>
-            </File>
             <File Path="src/sdram_controller/sdram_adapt/sdram_oddr.v">
                 <FileInfo>
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="27"/>
+                    <Attr Name="CompileOrder" Val="26"/>
                 </FileInfo>
             </File>
             <File Path="src/sdram_controller/sdram_adapt/sdram_params_h.v">
@@ -219,7 +211,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="28"/>
+                    <Attr Name="CompileOrder" Val="27"/>
                 </FileInfo>
             </File>
             <File Path="src/Verilog-LIB/buffer_delay.v">
@@ -227,7 +219,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="29"/>
+                    <Attr Name="CompileOrder" Val="28"/>
                 </FileInfo>
             </File>
             <File Path="src/top_test_sdram_controller.v">
@@ -236,7 +228,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="30"/>
+                    <Attr Name="CompileOrder" Val="29"/>
                 </FileInfo>
             </File>
             <File Path="src/Verilog-LIB/timing_split.v">
@@ -244,7 +236,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="31"/>
+                    <Attr Name="CompileOrder" Val="30"/>
                 </FileInfo>
             </File>
             <File Path="src/sdram_controller/sdram_bank_active.v">
@@ -252,7 +244,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="32"/>
+                    <Attr Name="CompileOrder" Val="31"/>
                 </FileInfo>
             </File>
             <File Path="src/sdram_controller/sdram_bank_rw.v">
@@ -260,7 +252,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="33"/>
+                    <Attr Name="CompileOrder" Val="32"/>
                 </FileInfo>
             </File>
             <File Path="src/Verilog-adapt/anlogic/dbclk_sync_ram_lut_anlogic.v">
@@ -269,7 +261,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="34"/>
+                    <Attr Name="CompileOrder" Val="33"/>
                 </FileInfo>
             </File>
             <File Path="src/Verilog-adapt/anlogic/simple_async_ram_lut_anlogic.v">
@@ -277,7 +269,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="35"/>
+                    <Attr Name="CompileOrder" Val="34"/>
                 </FileInfo>
             </File>
             <File Path="src/Verilog-adapt/anlogic/simple_sync_fifo_lut_anlogic.v">
@@ -285,7 +277,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="36"/>
+                    <Attr Name="CompileOrder" Val="35"/>
                 </FileInfo>
             </File>
             <File Path="src/sdram_controller/sdram_adapt/simple_sync_fifo_sdram_adapt.v">
@@ -293,7 +285,7 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
-                    <Attr Name="CompileOrder" Val="37"/>
+                    <Attr Name="CompileOrder" Val="36"/>
                 </FileInfo>
             </File>
             <File Path="src/Verilog-LIB/data_batch.v">
@@ -301,7 +293,24 @@
                     <Attr Name="UsedInSyn" Val="true"/>
                     <Attr Name="UsedInP&R" Val="true"/>
                     <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="37"/>
+                </FileInfo>
+            </File>
+            <File Path="src/Verilog-LIB/en_clk_divider.v">
+                <FileInfo>
+                    <Attr Name="AutoExcluded" Val="true"/>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
                     <Attr Name="CompileOrder" Val="38"/>
+                </FileInfo>
+            </File>
+            <File Path="src/sdram_controller/sdram_intelli_refresh.v">
+                <FileInfo>
+                    <Attr Name="UsedInSyn" Val="true"/>
+                    <Attr Name="UsedInP&R" Val="true"/>
+                    <Attr Name="BelongTo" Val="design_1"/>
+                    <Attr Name="CompileOrder" Val="39"/>
                 </FileInfo>
             </File>
         </Verilog>
